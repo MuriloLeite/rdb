@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding-top: 5vh;
+            background-color: rgba(83, 203, 233, 0.377);
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, sans-serif;
+            color: #323232;
+            border: none;
+        }
+
+
+        input,
+        label {
+            display: block;
+            outline: none;
+            width: 100%;
+        }
+
+        input:focus,
+        label:focus {
+            outline: none;
+        }
+
+        a {
+            color: #5900ff
+        }
+
+        .container {
+            width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #FFF;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        #container h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 25px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .full-box {
+            flex: 1 1 100%;
+            position: relative;
+        }
+
+        .half-box {
+            flex: 1 1 45%;
+            position: relative;
+        }
+
+        .spacing {
+            margin-right: 2.5%;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: .8rem;
+        }
+
+        input {
+            border-bottom: 2px solid #323232;
+            padding: 10px;
+            font-size: .9rem;
+            margin-bottom: 40px;
+        }
+
+        input:focus {
+            border-color: rgba(8, 177, 255, 0.534);
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-bottom: 2px solid #323232;
+        }
+
+
+        button {
+            background-color: rgba(8, 177, 255, 0.534);
+            color: #FFF;
+            border: none;
+            border-radius: 20px;
+            height: 40px;
+            width: 450px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgba(0, 2, 3, 0.534);
+        }
+
+        #termsCheckbox {
+            margin-right: 5px;
+        }
+
+        #termsCheckbox,
+        #termsCheckbox-label {
+            display: inline-block;
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Registro</h1>
+        <form action="{% url 'registro' %}" method="post">
+		{% csrf_token %}
+            <div class="full-box">
+            	<label for="email">Email:</label>
+            	<input type="email" id="email" name="email" required>
+            </div>
+            <div class="half-box spacing">
+            	<label for="username">Nome de Usuário:</label>
+            	<input type="text" id="username" name="username" required>
+            </div>
+            <div class="half-box">
+                <label for="phone">Telefone:</label>
+            	<input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="half-box spacing">
+            	<label for="password">Senha:</label>
+            	<input type="password" id="password" name="password" required>
+            </div>
+            <div class="half-box">
+                <label for="confirmPassword">Confirmar Senha:</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+            <div class="half-box">
+                <input type="checkbox" id="termsCheckbox" required>
+                <label for="termsCheckbox"  id="termsCheckbox-label">Li e concordo com os <a href="termos_de_uso.html">Termos de Uso</a></label>
+            </div>
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            // Obter valores dos campos
+            const email = document.getElementById("email").value;
+            const name = document.getElementById("name").value;
+            const lastName = document.getElementById("lastName").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const termsCheckbox = document.getElementById("termsCheckbox");
+
+            // Verificar se as senhas coincidem
+            if (password !== confirmPassword) {
+                alert("As senhas não coincidem. Por favor, tente novamente.");
+                return;
+            }
+
+            // Verificar se o checkbox de termos de uso está marcado
+            if (!termsCheckbox.checked) {
+                alert("Você deve concordar com os Termos de Uso para se registrar.");
+                return;
+            }
+
+            // Simulação de registro bem-sucedido (substitua com lógica real de registro)
+            // Neste exemplo, simplesmente redirecionaremos para a página inicial após 2 segundos
+            setTimeout(function () {
+                window.location.href = "index.html"; // Redireciona para a página inicial
+            }, 200);
+        });
+    </script>
+</body>
+
+</html>

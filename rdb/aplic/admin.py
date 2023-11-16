@@ -1,0 +1,49 @@
+from django.contrib import admin
+from aplic.models import CustomUser, Pessoafisica, Doacao, Pessoajuridica, Endereco, Imagem, Feedback,Comentario, Evento, Parceria, Atracao, Equipamento
+
+@admin.register(CustomUser)
+class CustomUser(admin.ModelAdmin):
+    list_display = ['username']
+    search_fields = ['texto']
+
+@admin.register(Pessoafisica)
+class PessoafisicaAdmin(admin.ModelAdmin):
+    list_display = ['cpf']
+    search_fields = ['texto']
+@admin.register(Pessoajuridica)
+class PessoajuridicaAdmin(admin.ModelAdmin):
+    list_display = ('cnpj', 'nomeFantasia', 'razaoSocial')  
+    search_fields = ['texto']
+@admin.register(Imagem)
+class ImagemAdmin(admin.ModelAdmin):
+    search_fields = ['texto']
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display =['evento']
+    search_fields = ['texto']
+@admin.register(Evento)
+class EventoAdmin(admin.ModelAdmin):
+    search_fields = ['texto']
+@admin.register(Parceria)
+class ParceriaAdmin(admin.ModelAdmin):
+    search_fields = ['texto']
+@admin.register(Atracao)
+class AtracaoAdmin(admin.ModelAdmin):
+    search_fields = ['texto']
+@admin.register(Equipamento)
+class EquipamentoAdmin(admin.ModelAdmin):
+    list_display = ['atracao', 'texto']
+    search_fields = ['texto']
+@admin.register(Comentario)
+class ComentarioAdmin(admin.ModelAdmin):
+    list_display = ['texto', 'data_publicacao', 'imagem']
+    list_filter = ['data_publicacao']
+    search_fields = ['texto']
+@admin.register(Endereco)
+class EnderecoAdmin(admin.ModelAdmin):
+    list_display = ['estado', 'cidade', 'bairro', 'rua', 'numero', 'complemento']
+    list_filter = ['estado']
+@admin.register(Doacao)
+class DoacaoAdmin(admin.ModelAdmin):
+    list_display = ['valor','doador']
+    search_fields = ['texto']

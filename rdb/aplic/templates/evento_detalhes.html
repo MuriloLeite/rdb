@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Evento - {{ evento.nomeOrganizador }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilize o cabeçalho com o nome do evento */
+        h1 {
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Estilize os detalhes do evento */
+        h2 {
+            font-size: 24px;
+            color: #007BFF;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        /* Estilize a seção de feedbacks */
+        .feedback-section {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        /* Estilize cada feedback */
+        .feedback {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        /* Estilize o botão "Adicionar Feedback" */
+        .add-feedback-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .add-feedback-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilize as seções e adicione divisões visuais */
+        .section {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            color: #007BFF;
+        }
+
+        /* Estilize as imagens da galeria para que se comportem como botões */
+        .gallery img {
+            cursor: pointer;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        /* Estilize a seção de comentários para que seja inicialmente oculta */
+        .comments {
+            display: none;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        /* Estilize os botões "Adicionar Comentário" e "Adicionar Feedback" */
+        .add-comment-button,
+        .add-feedback-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .add-comment-button:hover,
+        .add-feedback-button:hover {
+            background-color: #0056b3;
+        }
+        #campo-feedback {
+            margin-top: 20px;
+        }
+
+        #texto-feedback {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'eventos' %}">Voltar</a>
+    <h1>{{ evento.nomeOrganizador }}</h1>
+
+    <div class="section">
+        <h2>Detalhes do Evento</h2>
+        <p><strong>Data:</strong> {{ evento.data }}</p>
+        <p><strong>CEP:</strong> {{ evento.cep }}</p>
+        <p><strong>Número:</strong> {{ evento.numero }}</p>
+        <p><strong>Descrição:</strong> {{ evento.descricao }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Atrações</h2>
+        <ul>
+            {% for atracao in evento.atracao_set.all %}
+                <li>{{ atracao.texto }}</li>
+                <ul>
+                    {% for equipamento in atracao.equipamento_set.all %}
+                        <li>{{ equipamento.texto }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Galeria de Imagens</h2>
+        <div class="gallery">
+            {% for imagem in evento.imagem_set.all %}
+                <img src="{{ imagem.formato.url }}" alt="{{ imagem.legenda }}" onclick="toggleComments('{{ imagem.id }}')">
+                <p>{{ imagem.legenda }}</p>
+                <h3>Comentários</h3>
+                <ul>
+                    {% for comment in comentarios %}
+                        <li class="comment">
+                            <p><strong>{{ comment.autor.username }} disse:</strong> {{ comment.texto }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button id="mostrar-comentario" class="add-comment-button">Adicionar Comentário</button>
+                <div id="campo-comentario" style="display: none;">
+                    <form method="post" action="{% url 'adicionar_comentario' imagem.id %}" id="form-comentario">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">Enviar Comentário</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Feedbacks</h2>
+        <ul>
+            {% for feedback in evento.feedback_set.all %}
+                <li class="feedback">
+                    <p><strong>{{ feedback.autor }} </strong> disse em {{ feedback.data_criacao }}:</p>
+                    <p>{{ feedback.texto }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+        <form method="post" id="form-feedback" action="{% url 'adicionar_feedback' evento.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="button" class="add-feedback-button" id="mostrar-feedback">Adicionar Feedback</button>
+            <div id="campo-feedback" style="display: none;">
+                <textarea id="id_texto" name="texto" rows="4" cols="50" placeholder="Digite seu feedback aqui"></textarea>
+                <button type="submit">Enviar Feedback</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('mostrar-feedback').addEventListener('click', function() {
+        document.getElementById('campo-feedback').style.display = 'block';
+        });
+        function toggleComments(imageId) {
+            var commentsSection = document.getElementById('comments-' + imageId);
+            if (commentsSection.style.display === 'block') {
+                commentsSection.style.display = 'none';
+            } else {
+                commentsSection.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

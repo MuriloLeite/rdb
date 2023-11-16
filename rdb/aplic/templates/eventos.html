@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Página de Eventos</title>
+</head>
+<body>
+    <div>
+        <ul>
+          <a href="doacao.html" class="btn-doacao btn-white">Doações</a></li>
+          <a href="/eventos" class="btn-sobre-nos btn-white">Eventos</a></li>
+          <a href="/login" class="btn-login btn-white">Entrar</a></li>
+          <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
+          <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+        </ul>
+      <div class="tituloIndex">
+        <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
+      </div>
+    </div>
+    <br><br>
+    <div class="container">
+        <div class="event">
+            <h1>Eventos</h1>
+            <ul>
+                {% for evento in eventos %}
+                <a href="{% url 'evento-detalhes' evento.pk %}">
+                    <div class="card" >
+                        <div class="card-header">
+                            <h2>{{ evento.nomeOrganizador }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Data:</strong> {{ evento.data }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>    
+</body>
+</html>

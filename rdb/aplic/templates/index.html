@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        .myDiv {
+            border: 1px outset hsl(83, 203, 233, 0.377);
+            background-color: rgba(83, 203, 233, 0.377);
+            height: 500px;
+            margin-top: -25px;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+        
+    </style>
+</head>
+
+<body>
+  <div class="myDiv">
+        <ul>
+          <a href="doacao.html" class="btn-doacao btn-white">Doações</a></li>
+          <a href="/eventos" class="btn-sobre-nos btn-white">Eventos</a></li>
+          <a href="/login" class="btn-login btn-white">Entrar</a></li>
+          <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
+          <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+        </ul>
+      <div class="tituloIndex">
+        <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
+      </div>
+  </div>
+</body>
+
+</html>
