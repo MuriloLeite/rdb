@@ -7,9 +7,13 @@ class CustomUserCreationForm(forms.ModelForm):
         model = CustomUser
         fields = ['email', 'username', 'phone', 'password']
 
-class LoginForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=100)
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+class CustomAuthenticationForm(AuthenticationForm):
+    error_messages = {
+        'invalid_login': 'Por favor, entre com um username e senha corretos. Note que ambos os campos diferenciam maiúsculas e minúsculas.',
+        'inactive': 'Esta conta está inativa.',
+    }
+
+class LoginForm(forms.Form):        
     class Meta:
         model = CustomUser
         fields = ['username', 'password']
@@ -17,8 +21,4 @@ class LoginForm(forms.Form):
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
-        fields = ['texto']
-class ComentarioForm(forms.ModelForm):
-    class Meta:
-        model = Comentario
         fields = ['texto']

@@ -151,21 +151,16 @@
         <div class="gallery">
             {% for imagem in evento.imagem_set.all %}
                 <img src="{{ imagem.formato.url }}" alt="{{ imagem.legenda }}" onclick="toggleComments('{{ imagem.id }}')">
-                <p>{{ imagem.legenda }}</p>
-                <h3>Comentários</h3>
-                <ul>
-                    {% for comment in comentarios %}
-                        <li class="comment">
-                            <p><strong>{{ comment.autor.username }} disse:</strong> {{ comment.texto }}</p>
-                        </li>
+                <div id="comments_{{ imagem.id }}" style="display: none;">
+                    {% for comentario in imagem.comentario_set.all %}
+                        <p><strong>{{ comentario.autor }} </strong> disse em {{ comentario.data_publicacao }}:</p>
+                        <p>{{ comentario.texto }}</p>
                     {% endfor %}
-                </ul>
-                <button id="mostrar-comentario" class="add-comment-button">Adicionar Comentário</button>
-                <div id="campo-comentario" style="display: none;">
-                    <form method="post" action="{% url 'adicionar_comentario' imagem.id %}" id="form-comentario">
+                    <form method="post" action="{% url 'adicionar_comentario' imagem.id evento.id %}">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit">Enviar Comentário</button>
+                        <label for="comment_text">Adicionar Comentário:</label>
+                        <input type="text" name="texto" id="comment_text">
+                        <input type="submit" value="Enviar">
                     </form>
                 </div>
             {% endfor %}
@@ -197,14 +192,10 @@
         document.getElementById('mostrar-feedback').addEventListener('click', function() {
         document.getElementById('campo-feedback').style.display = 'block';
         });
-        function toggleComments(imageId) {
-            var commentsSection = document.getElementById('comments-' + imageId);
-            if (commentsSection.style.display === 'block') {
-                commentsSection.style.display = 'none';
-            } else {
-                commentsSection.style.display = 'block';
-            }
+        function toggleComments(imagemId) {
+            var commentsDiv = document.getElementById('comments_' + imagemId);
+            commentsDiv.style.display = (commentsDiv.style.display === 'none' || commentsDiv.style.display === '') ? 'block' : 'none';
         }
-    </script>
+    </script>   
 </body>
 </html>
