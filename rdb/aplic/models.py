@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password, phone=None):
         user = self.model(
-            email=email,
+            email=self.normalize_email(email),
             username=username,
             phone=phone
         )
@@ -34,12 +33,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'  # Alterado para usar o e-mail como campo de identificação
+    REQUIRED_FIELDS = ['username']  # Adicionado username aos campos obrigatórios
 
     def __str__(self):
         return self.username
-    
 
 class Pessoafisica(CustomUser):
     cpf = models.CharField(max_length=14)

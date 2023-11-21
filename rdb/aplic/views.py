@@ -13,7 +13,8 @@ class GaleriaView(TemplateView):
     template_name = 'galeria.html'
 class ContatoView(TemplateView):
     template_name = 'contato.html'
-
+class DoacaoView(TemplateView):
+    template_name = "doacao.html"
 class CustomLoginView(LoginView):
     form_class = CustomAuthenticationForm
 class RegistroView(TemplateView):

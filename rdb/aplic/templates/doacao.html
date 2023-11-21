@@ -31,7 +31,7 @@
     <div>
         <ul>
           <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
-          <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
+          <a href="/eventos" class="btn-sobre-nos btn-white">Eventos</a></li>
           <a href="/login" class="btn-login btn-white">Entrar</a></li>
           <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
           <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
@@ -40,33 +40,6 @@
         <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
       </div>
     </div>
-    <br><br>
-    <div class="container">
-        <div class="search-bar">
-          <input type="text" placeholder="Pesquisar eventos" id="searchBarInput">
-          <button type="button" onclick="searchEvents()">Buscar</button>
-        </div>
-        <div class="event">
-            <h1>Eventos</h1>
-            <ul>
-                {% for evento in eventos %}
-                <a href="{% url 'evento-detalhes' evento.pk %}">
-                    <div class="card" >
-                        <div class="card-header">
-                            <h2>{{ evento.nomeOrganizador }}</h2>
-                        </div>
-                        <div class="card-body">
-                            <p><strong>Data:</strong> {{ evento.data }}</p>
-                        </div>
-                        <div>
-                            <p><strong>Descrição:</strong> {{ evento.descricao }}</p>
-                        </div>
-                    </div>
-                </a>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>    
     <script>
         function searchEvents() {
           const searchTerm = document.getElementById('searchBarInput').value.toLowerCase();
