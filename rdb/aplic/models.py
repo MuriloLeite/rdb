@@ -33,13 +33,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'  # Alterado para usar o e-mail como campo de identificação
-    REQUIRED_FIELDS = ['username']  # Adicionado username aos campos obrigatórios
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.username
 
-class Pessoafisica(CustomUser):
+class Pessoafisica(models.Model):
     cpf = models.CharField(max_length=14)
 
     class Meta:
@@ -48,7 +48,7 @@ class Pessoafisica(CustomUser):
 
     def __str__(self):
         return (self.cpf)
-class Pessoajuridica(CustomUser):
+class Pessoajuridica(models.Model):
     cnpj = models.CharField(max_length=18)
     razaoSocial = models.CharField(max_length=100)
     nomeFantasia = models.CharField(max_length=100)

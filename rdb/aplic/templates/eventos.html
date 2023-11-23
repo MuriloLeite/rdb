@@ -47,7 +47,7 @@
           <button type="button" onclick="searchEvents()">Buscar</button>
         </div>
         <div class="event">
-            <h1>Eventos</h1>
+            <h2>Eventos</h2>
             <ul>
                 {% for evento in eventos %}
                 <a href="{% url 'evento-detalhes' evento.pk %}">

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login
 from django.views.generic import TemplateView, ListView, DetailView
-from .forms import CustomUserCreationForm, FeedbackForm, CustomAuthenticationForm
-from django.contrib.auth.views import LoginView
+from .forms import CustomUserCreationForm, FeedbackForm
 from django.urls import reverse
 from .models import Evento, Feedback, Imagem, Comentario
 from django.views.decorators.http import require_POST
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.http import HttpResponse
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -15,8 +16,7 @@ class ContatoView(TemplateView):
     template_name = 'contato.html'
 class DoacaoView(TemplateView):
     template_name = "doacao.html"
-class CustomLoginView(LoginView):
-    form_class = CustomAuthenticationForm
+
 class RegistroView(TemplateView):
     template_name = 'registro.html'
 class ParceriasView(TemplateView):
@@ -73,7 +73,21 @@ def adicionar_feedback(request, evento_id):
     return render(request, 'aplic/adicionar_feedback.html', {'form': form, 'evento': evento, 'feedbacks': feedbacks})
 
     
-
+def user_login(request, CustomUser):
+    print(2222)
+    if request.method == 'POST':
+        print(4444)
+        username = request.POST.get['username']
+        password = request.POST.get['password']
+        CustomUser = authenticate(request, username=username, password=password)
+        print(CustomUser)
+        if CustomUser is not None:
+            login(request, CustomUser)
+            messages.success(request, 'Login bem-sucedido!')
+            return redirect('http://127.0.0.1:8000/')
+        else:
+            return HttpResponse("ERRADO")
+    return render(request, 'login.html')
 
 
 def adicionar_comentario(request, imagem_id, evento_id):
@@ -84,5 +98,4 @@ def adicionar_comentario(request, imagem_id, evento_id):
         Comentario.objects.create(imagem=imagem, autor=autor, texto=texto)
         return redirect('evento-detalhes', pk=evento_id)
     else:
-        # Adicione o código para lidar com métodos de requisição diferentes, se necessário  
         pass

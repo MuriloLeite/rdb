@@ -151,6 +151,7 @@
         <div class="gallery">
             {% for imagem in evento.imagem_set.all %}
                 <img src="{{ imagem.formato.url }}" alt="{{ imagem.legenda }}" onclick="toggleComments('{{ imagem.id }}')">
+                <p>{{ imagem.legenda }}</p>
                 <div id="comments_{{ imagem.id }}" style="display: none;">
                     {% for comentario in imagem.comentario_set.all %}
                         <p><strong>{{ comentario.autor }} </strong> disse em {{ comentario.data_publicacao }}:</p>
