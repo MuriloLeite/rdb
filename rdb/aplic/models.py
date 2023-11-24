@@ -1,9 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import BaseUserManager, User
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password, phone=None):
         user = self.model(
-            email=self.normalize_email(email),
+            email=email,
             username=username,
             phone=phone
         )
@@ -23,23 +24,12 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=30, unique=True)
-    username = models.CharField(max_length=30, unique=True)
-    phone = models.CharField(max_length=15, blank=True, null=True)
-    endereco = models.ForeignKey('Endereco', on_delete=models.CASCADE, null=True, default="")
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
-    objects = CustomUserManager()
+class Pessoa(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
-
-    def __str__(self):
-        return self.username
-
-class Pessoafisica(models.Model):
+class Pessoafisica(Pessoa):
+    nome = models.CharField(max_length=32, null=True)
     cpf = models.CharField(max_length=14)
 
     class Meta:
@@ -48,7 +38,8 @@ class Pessoafisica(models.Model):
 
     def __str__(self):
         return (self.cpf)
-class Pessoajuridica(models.Model):
+class Pessoajuridica(Pessoa):
+    nome = models.CharField(max_length=32, null=True)
     cnpj = models.CharField(max_length=18)
     razaoSocial = models.CharField(max_length=100)
     nomeFantasia = models.CharField(max_length=100)
@@ -73,8 +64,9 @@ class Evento(models.Model):
         verbose_name_plural = 'Eventos'
     def __str__(self):
         return f"{self.nomeOrganizador}, {self.data}, {self.cep}, {self.numero}, {self.descricao}"
+    
 class Feedback(models.Model):
-    autor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     texto = models.TextField(max_length=200)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, null=True, default=None)
     data_criacao = models.DateTimeField(auto_now_add=True, null=True)
@@ -121,7 +113,7 @@ class Equipamento(models.Model):
         verbose_name_plural = 'Equipamentos'
     
 class Comentario(models.Model):
-    autor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     texto = models.TextField()
     data_publicacao = models.DateTimeField(auto_now_add=True)
     imagem = models.ForeignKey(Imagem, on_delete=models.CASCADE)
@@ -143,7 +135,7 @@ class Endereco(models.Model):
         verbose_name_plural = 'Endereços'
 class Doacao(models.Model):
     valor = models.IntegerField()
-    doador = models.ForeignKey('CustomUser',on_delete=models.SET_NULL,null=True)
+    doador = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     item = models.TextField(max_length=100)
     class Meta:
         verbose_name = 'Doação'

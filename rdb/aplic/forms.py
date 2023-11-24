@@ -1,26 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UsernameField
-from .models import CustomUser, Feedback
+from django.contrib.auth.models import User
+from .models import Feedback
 
-class CustomUserCreationForm(forms.ModelForm):
+class UserCreationForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
-        fields = ['email', 'username', 'phone', 'password']
-
-class UserLoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
-    username = UsernameField(widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': '', 'id': 'hello'}))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': '',
-            'id': 'hi',
-        }
-))
-
+        model = User
+        fields = ['username', 'password']
 
 class FeedbackForm(forms.ModelForm):
     class Meta:

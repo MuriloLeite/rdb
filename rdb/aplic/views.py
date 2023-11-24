@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
-from .forms import CustomUserCreationForm, FeedbackForm
-from django.urls import reverse
+from .forms import UserCreationForm, FeedbackForm
 from .models import Evento, Feedback, Imagem, Comentario
 from django.views.decorators.http import require_POST
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from django.http import HttpResponse
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -36,16 +34,31 @@ class EventoDetailView(DetailView):
 
 def registro(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect(reverse('login'))
-        else:
-            return render(request, 'registro.html', {'form': form, 'error_message': 'O formulário não é válido.'})
+            return redirect('http://127.0.0.1:8000/')  # Redirecione para a página de dashboard ou outra página desejada após o registro
     else:
-        form = CustomUserCreationForm()
+        form = UserCreationForm()
+
     return render(request, 'registro.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('http://127.0.0.1:8000/')  # Redirecione para a página de dashboard ou outra página desejada após o login
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 
 def get(self, request, *args, **kwargs):
@@ -71,23 +84,6 @@ def adicionar_feedback(request, evento_id):
 
     feedbacks = Feedback.objects.filter(evento=evento)
     return render(request, 'aplic/adicionar_feedback.html', {'form': form, 'evento': evento, 'feedbacks': feedbacks})
-
-    
-def user_login(request, CustomUser):
-    print(2222)
-    if request.method == 'POST':
-        print(4444)
-        username = request.POST.get['username']
-        password = request.POST.get['password']
-        CustomUser = authenticate(request, username=username, password=password)
-        print(CustomUser)
-        if CustomUser is not None:
-            login(request, CustomUser)
-            messages.success(request, 'Login bem-sucedido!')
-            return redirect('http://127.0.0.1:8000/')
-        else:
-            return HttpResponse("ERRADO")
-    return render(request, 'login.html')
 
 
 def adicionar_comentario(request, imagem_id, evento_id):

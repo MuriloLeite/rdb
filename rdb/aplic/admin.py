@@ -1,10 +1,6 @@
 from django.contrib import admin
-from aplic.models import CustomUser, Pessoafisica, Doacao, Pessoajuridica, Endereco, Imagem, Feedback,Comentario, Evento, Parceria, Atracao, Equipamento
+from aplic.models import  Pessoafisica, Doacao, Pessoajuridica, Endereco, Imagem, Feedback,Comentario, Evento, Parceria, Atracao, Equipamento
 
-@admin.register(CustomUser)
-class CustomUser(admin.ModelAdmin):
-    list_display = ['username']
-    search_fields = ['texto']
 
 @admin.register(Pessoafisica)
 class PessoafisicaAdmin(admin.ModelAdmin):
@@ -45,5 +41,5 @@ class EnderecoAdmin(admin.ModelAdmin):
     list_filter = ['estado']
 @admin.register(Doacao)
 class DoacaoAdmin(admin.ModelAdmin):
-    list_display = ['valor','doador']
+    list_display = ['valor']
     search_fields = ['texto']

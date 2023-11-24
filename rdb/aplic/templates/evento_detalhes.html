@@ -154,15 +154,19 @@
                 <p>{{ imagem.legenda }}</p>
                 <div id="comments_{{ imagem.id }}" style="display: none;">
                     {% for comentario in imagem.comentario_set.all %}
-                        <p><strong>{{ comentario.autor }} </strong> disse em {{ comentario.data_publicacao }}:</p>
+                        <p><strong>{{ comentario.autor.username }} </strong> disse em {{ comentario.data_criacao }}:</p>
                         <p>{{ comentario.texto }}</p>
                     {% endfor %}
-                    <form method="post" action="{% url 'adicionar_comentario' imagem.id evento.id %}">
-                        {% csrf_token %}
-                        <label for="comment_text">Adicionar Comentário:</label>
-                        <input type="text" name="texto" id="comment_text">
-                        <input type="submit" value="Enviar">
-                    </form>
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'adicionar_comentario' imagem.id evento.id %}">
+                            {% csrf_token %}
+                            <label for="comment_text">Adicionar Comentário:</label>
+                            <input type="text" name="texto" id="comment_text">
+                            <input type="submit" value="Enviar">
+                        </form>
+                    {% else %}
+                        <p>Faça login para adicionar comentários.</p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
@@ -173,20 +177,24 @@
         <ul>
             {% for feedback in evento.feedback_set.all %}
                 <li class="feedback">
-                    <p><strong>{{ feedback.autor }} </strong> disse em {{ feedback.data_criacao }}:</p>
+                    <p><strong>{{ feedback.autor.username }} </strong> disse em {{ feedback.data_criacao }}:</p>
                     <p>{{ feedback.texto }}</p>
                 </li>
             {% endfor %}
         </ul>
-        <form method="post" id="form-feedback" action="{% url 'adicionar_feedback' evento.id %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="button" class="add-feedback-button" id="mostrar-feedback">Adicionar Feedback</button>
-            <div id="campo-feedback" style="display: none;">
-                <textarea id="id_texto" name="texto" rows="4" cols="50" placeholder="Digite seu feedback aqui"></textarea>
-                <button type="submit">Enviar Feedback</button>
-            </div>
-        </form>
+        {% if user.is_authenticated %}
+            <form method="post" id="form-feedback" action="{% url 'adicionar_feedback' evento.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="button" class="add-feedback-button" id="mostrar-feedback">Adicionar Feedback</button>
+                <div id="campo-feedback" style="display: none;">
+                    <textarea id="id_texto" name="texto" rows="4" cols="50" placeholder="Digite seu feedback aqui"></textarea>
+                    <button type="submit">Enviar Feedback</button>
+                </div>
+            </form>
+        {% else %}
+            <p>Faça login para adicionar feedbacks.</p>
+        {% endif %}
     </div>
 
     <script>
