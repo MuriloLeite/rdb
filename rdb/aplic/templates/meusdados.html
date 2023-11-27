@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    form {
+      margin-top: 20px;
+    }
+    label, input, select {
+      display: block;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .camposFisica, .camposJuridica {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h2>Informações do Usuário</h2>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Telefone: {{ user.pessoa.telefone }}</p>
+    {% if user.pessoa.pessoafisica %}
+      <p>CPF: {{ user.pessoa.pessoafisica.cpf }}</p>
+    {% elif user.pessoa.pessoajuridica %}
+      <p>CNPJ: {{ user.pessoa.pessoajuridica.cnpj }}</p>
+      <p>Razão Social: {{ user.pessoa.pessoajuridica.razaoSocial }}</p>
+      <p>Nome Fantasia: {{ user.pessoa.pessoajuridica.nomeFantasia }}</p>
+    {% endif %}
+  </div>
+
+  <h2>Meus Dados</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <label for="id_nome">Nome Completo:</label>
+    <input type="text" name="nome" id="id_nome" value="{{ user.pessoa.nome }}" required>
+    <br>
+
+    <label for="id_tipo">Tipo de Pessoa:</label>
+    <select name="tipo" id="id_tipo" onchange="mostrarCampos(this.value)" required>
+      <option value="" {% if not user.pessoa.pessoafisica and not user.pessoa.pessoajuridica %}selected{% endif %}>Escolha...</option>
+      <option value="fisica" {% if user.pessoa.pessoafisica %}selected{% endif %}>Pessoa Física</option>
+      <option value="juridica" {% if user.pessoa.pessoajuridica %}selected{% endif %}>Pessoa Jurídica</option>
+    </select>
+    <br>
+
+    <div class="camposFisica">
+      <label for="id_cpf">CPF:</label>
+      <input type="text" name="cpf" id="id_cpf" value="{{ user.pessoa.pessoafisica.cpf }}" required>
+    </div>
+
+    <div class="camposJuridica">
+      <label for="id_cnpj">CNPJ:</label>
+      <input type="text" name="cnpj" id="id_cnpj" value="{{ user.pessoa.pessoajuridica.cnpj }}" required>
+      <br>
+      <label for="id_razao_social">Razão Social:</label>
+      <input type="text" name="razao_social" id="id_razao_social" value="{{ user.pessoa.pessoajuridica.razaoSocial }}" required>
+      <br>
+      <label for="id_nome_fantasia">Nome Fantasia:</label>
+      <input type="text" name

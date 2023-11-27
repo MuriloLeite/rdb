@@ -5,6 +5,7 @@ from .models import Evento, Feedback, Imagem, Comentario
 from django.views.decorators.http import require_POST
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.views import View
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -95,3 +96,7 @@ def adicionar_comentario(request, imagem_id, evento_id):
         return redirect('evento-detalhes', pk=evento_id)
     else:
         pass
+
+class MeusDadosView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'meusdados.html')

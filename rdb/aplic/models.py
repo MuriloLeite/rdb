@@ -84,6 +84,7 @@ class Imagem(models.Model):
         verbose_name_plural = 'Imagens'
     def __str__(self):
         return (self.legenda)
+    
 class Parceria(models.Model):
     nome = models.CharField(max_length=100)
     email = models.EmailField(max_length=50)
