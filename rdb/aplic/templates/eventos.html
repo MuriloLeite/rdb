@@ -48,8 +48,10 @@
     <br><br>
     <div class="container">
         <div class="search-bar">
-          <input type="text" placeholder="Pesquisar eventos" id="searchBarInput">
-          <button type="button" onclick="searchEvents()">Buscar</button>
+          <form method="get" action="{% url 'eventos' %}">
+              <input type="text" name="search" placeholder="Pesquisar eventos" id="searchBarInput" value="{{ search_term }}">
+              <button type="submit">Buscar</button>
+          </form>
         </div>
         <div class="event">
             <h2>Eventos</h2>
@@ -72,22 +74,5 @@
             </ul>
         </div>
     </div>    
-    <script>
-        function searchEvents() {
-          const searchTerm = document.getElementById('searchBarInput').value.toLowerCase();
-          const eventCards = document.querySelectorAll('.card');
-      
-          for (const eventCard of eventCards) {
-            const eventName = eventCard.querySelector('h2').textContent.toLowerCase();
-            const eventDate = eventCard.querySelector('p strong').textContent.toLowerCase();
-      
-            if (eventName.includes(searchTerm) || eventDate.includes(searchTerm)) {
-              eventCard.style.display = 'block';
-            } else {
-              eventCard.style.display = 'none';
-            }
-          }
-        }
-      </script>
 </body>
 </html>

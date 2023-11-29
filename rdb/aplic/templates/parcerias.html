@@ -10,15 +10,15 @@
 <body>
     <div>
         <ul>
-          <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
-          <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
-          <a href="/login" class="btn-login btn-white">Entrar</a></li>
-          <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
-          <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+            <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
+            <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
+            <a href="/login" class="btn-login btn-white">Entrar</a></li>
+            <a href="/registro" class="btn-registar btn-white">Registre-se</a></li>
+            <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
         </ul>
-      <div class="tituloIndex">
-        <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
-      </div>
+        <div class="tituloIndex">
+            <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
+        </div>
     </div>
     <br><br>
     <div class="container">
@@ -26,12 +26,21 @@
         <p>
             Bem-vindo à nossa página de parcerias! Estamos sempre em busca de oportunidades para colaborações e parcerias estratégicas. Se você está interessado em trabalhar conosco, entre em contato para discutirmos como podemos trabalhar juntos.
         </p>
-        
+        <br>
         <h2>Benefícios da Parceria</h2>
         <p>
             Ao se tornar nosso parceiro, você terá acesso a uma série de benefícios, incluindo acesso a nossa rede de clientes, recursos exclusivos e suporte dedicado. Estamos comprometidos em criar relacionamentos mutuamente benéficos com nossos parceiros.
         </p>
-        
+        <br>
+        <h2>Parceiros</h2>
+        {% for parceria in parcerias %}
+            <div class="parcerias">
+                <h3>{{ parceria.nome }}</h3>
+                <p>Email: {{ parceria.email }}</p>
+                <p>Telefone: {{ parceria.telefone }}</p>
+            </div>
+        {% endfor %}
+
         <a href="mailto:contato@exemplo.com" class="contact-button">Entre em Contato</a>
     </div>
 </body>

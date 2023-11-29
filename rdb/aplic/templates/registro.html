@@ -10,9 +10,12 @@
 <body>
     <div class="container">
         <h2>Registro</h2>
-        <form method="post">
+        <form method="post" action="{% url 'registro' %}">
             {% csrf_token %}
-            {{ form.as_p }}
+            <input type="text" placeholder="Nome" name="nome"><br>
+            <input type="text" placeholder="CPF" name="cpf"><br>
+            <input type="text" placeholder="Nome de Usuário" name="username" id="id_username" required><br>
+            <input type="password" placeholder="Senha" name="senha"><br>
             <button type="submit">Registrar</button>
         </form>
     </div>
