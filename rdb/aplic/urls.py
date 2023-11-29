@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import IndexView, ContatoView, ParceriasView, MeusDadosView, EventosView, DoacaoView, registro, EventoDetailView, adicionar_comentario, adicionar_feedback, login_view, logout_view
+from .views import IndexView, ContatoView, parcerias, MeusDadosView, eventos, DoacaoView, registro, EventoDetailView, adicionar_comentario, adicionar_feedback, login_view, logout_view
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -12,8 +12,8 @@ urlpatterns = [
     path('registro/', registro, name='registro'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
-    path("parcerias", ParceriasView.as_view(), name="parcerias"),
-    path('eventos/', EventosView.as_view(), name='eventos'),
+    path('parcerias/', parcerias, name='pagina_parcerias'),
+    path('eventos/', eventos, name='eventos'),
     path('evento/<int:pk>/', EventoDetailView.as_view(), name='evento-detalhes'),
     path('adicionar_feedback/<int:evento_id>/', adicionar_feedback, name='adicionar_feedback'),
     path('adicionar_comentario/<int:imagem_id>/<int:evento_id>/', adicionar_comentario, name='adicionar_comentario'),
