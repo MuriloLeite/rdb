@@ -97,7 +97,7 @@ class Parceria(models.Model):
         return f"{self.nome},{self.email},{self.telefone}"
     
 class Atracao(models.Model):
-    texto = models.TextField(max_length=100, default="")
+    texto = models.TextField(max_length=300, default="")
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, null=True, default=None)
     class Meta:
         verbose_name = 'Atração'

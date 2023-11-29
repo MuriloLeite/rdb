@@ -2,51 +2,46 @@
 <html>
 
 <head>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <style>
-        .myDiv {
-            border: 1px outset hsl(83, 203, 233, 0.377);
-            background-color: rgba(83, 203, 233, 0.377);
-            height: 500px;
-            margin-top: -25px;
-            margin-left: -10px;
-            margin-right: -10px;
-        }
-        
-    </style>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <style>
+  </style>
 </head>
 
 <body>
-  <div>
-        <ul>
-          <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
-          <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
-          {% if not user.is_authenticated %}
-            <a href="/login" class="btn-login btn-white">Entrar</a></li>
-            <a href="/registro" class="btn-registar btn-white">Registrar-se</a></li>
-          {% endif %}
-          <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
-          {% if user.is_authenticated %}
-          <button id="usuario-btn">{{ user.username }}</button>
-          <div id="usuario-menu" style="display: none;">
-              <a href="{% url 'meus_dados' %}">Meus Dados</a>
-              <a href="{% url 'logout' %}">Logout</a>
-          </div>
-      
-          <script>
-              // Adiciona um evento de clique ao botão do usuário para exibir/ocultar o menu
-              document.getElementById('usuario-btn').addEventListener('click', function() {
-                  var menu = document.getElementById('usuario-menu');
-                  menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-              });
-          </script>
-          {% endif %}
-        </ul>
-      <div class="tituloIndex">
-        <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
-      </div>
-  </div>
+  <h1><a href="/"> <img src="static/logo_quem_resolve.jpg" alt="Logo"></a> </h1>
+  <ul>
+    <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
+    <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
+    {% if not user.is_authenticated %}
+    <a href="/login" class="btn-login btn-white">Entrar</a></li>
+    <a href="/registro" class="btn-registar btn-white">Registrar-se</a>
+    {% endif %}
+    <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+    {% if user.is_authenticated %}
+    <button id="usuario-btn">{{ user.username }}</button>
+    <div id="usuario-menu" style="display: none;">
+      <a href="{% url 'meus_dados' %}">Meus Dados</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endif %}
+  </ul>
+
+
+
+
+
+
+
+
+
+  <script>
+    // Adiciona um evento de clique ao botão do usuário para exibir/ocultar o menu
+    document.getElementById('usuario-btn').addEventListener('click', function () {
+      var menu = document.getElementById('usuario-menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+  </script>
 </body>
 
 </html>
