@@ -1,0 +1,248 @@
+.BarraNavegacao {
+    border: 2px outset rgb(255, 255, 255);
+    background-color: rgba(8, 177, 255, 0.534);
+    height: 100px;
+    position: relative;
+    margin-top: -10px;
+    margin-left:-10px;
+    margin-right:-10px;
+  }
+
+
+
+.logo{
+    margin-top: 26px;
+    margin-left: 50px;
+  }
+
+  /* cor do botao  */
+.btn-branco {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  /* cor do botão quando passa o mouse em cima */
+  .btn-branco::after {
+    background-color: #fefafa;
+  }
+
+
+
+/* botão Eventos */
+
+/* botão */
+.btn-evento {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    left: 350px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all .2s;
+    position:absolute;
+    margin-top: -75px;
+  
+  }
+  
+  /* cor do fundo quando o botão flutua */
+  .btn-evento:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgb(0, 0, 0);
+  }
+  
+  
+  /* tamanho da caixa branca do botao */
+  .btn-evento::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+  }
+  
+  /* movimento de expansão do botão */
+  .btn-evento:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+  }
+
+
+
+/* botão doação */
+
+/* botão */
+.btn-doacao {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    left: 540px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all .2s;
+    position: absolute;
+    margin-top: -75px;  
+  }
+  
+  /* cor do fundo quando o botão flutua */
+  .btn-doacao:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgb(0, 0, 0);
+  }
+  
+  
+  /* tamanho da caixa branca do botao */
+  .btn-doacao::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+  }
+  
+  /* movimento de expansão do botão */
+  .btn-doacao:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+  }
+
+
+
+  /* botão Parceria */
+
+/* botão */
+.btn-parceria {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    left: 730px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all .2s;
+    position: absolute;
+    margin-top: -75px;  
+  }
+  
+  /* cor do fundo quando o botão flutua */
+  .btn-parceria:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgb(0, 0, 0);
+  }
+  
+  
+  /* tamanho da caixa branca do botao */
+  .btn-parceria::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+  }
+  
+  /* movimento de expansão do botão */
+  .btn-parceria:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+  }
+
+/* botão login */
+
+/* botão */
+.btn-login {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    right: 230px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all .2s;
+    position: absolute;
+    margin-top: -75px;
+  }
+  
+  /* cor do fundo quando o botão flutua */
+  .btn-login:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgb(0, 0, 0);
+  }
+  
+  
+  /* tamanho da caixa branca do botao */
+  .btn-login::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+  }
+  
+  /* movimento de expansão do botão */
+  .btn-login:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+  }
+  
+  
+  
+  
+  /* botão resgistre-se */ 
+  
+  /* botão */
+  .btn-registar {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 25px;
+    right: 50px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all .2s;
+    position: absolute;
+    margin-top: -75px;
+  
+  }
+  
+  /* cor do fundo quando o botão flutua */
+  .btn-registar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgb(0, 0, 0);
+  }
+  
+  
+  /* tamanho da caixa branca do botao */
+  .btn-registar::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+  }
+  
+  /* movimento de expansão do botão */
+  .btn-registar:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+  }

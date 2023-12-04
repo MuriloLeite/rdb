@@ -27,45 +27,51 @@
       cursor: pointer;
     }
 
-    h2{
-      text-align: center;
+    div.GaleriaEventos {
+      height: 100%;
     }
 
-    div{
+    div.col {
+      width: 400px;
       display: inline-block;
-      margin-right: 10px;
+      margin-right: 20px;
+      /* Optional margin between columns */
+      vertical-align: top;
+      /* Align columns at the top */
     }
 
-
-
-    
-
-
-    
+    /* Clearfix to handle wrapping of columns */
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
   </style>
 </head>
 
 <body>
-  <div>
+  <div class="BarraNavegacao">
+    <div class="logo"><a href="/"><img src="{% static 'Logo.png' %}"></div>
     <ul>
-      <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
-      <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
+      <a href="/eventos" class="btn-evento btn-branco">Eventos</a>
+      <a href="/doacao" class="btn-doacao btn-branco">Doações</a>
+      <a href="/parcerias" class="btn-parceria btn-branco">Parcerias</a>
       {% if not user.is_authenticated %}
-      <a href="/login" class="btn-login btn-white">Entrar</a></li>
-      <a href="/registro" class="btn-registar btn-white">Registrar-se</a></li>
+      <a href="/login" class="btn-login btn-branco">Entrar</a>
+      <a href="/registro" class="btn-registar btn-branco">Registrar-se</a>
       {% endif %}
-      <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
       {% if user.is_authenticated %}
-      <a href="{% url 'logout' %}">Logout</a>
+      <button id="usuario-btn">{{ user.username }}</button>
+      <div id="usuario-menu" style="display: none;">
+        <a href="{% url 'meus_dados' %}">Meus Dados</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </div>
       {% endif %}
     </ul>
-    <div class="tituloIndex">
-      <a href="http://127.0.0.1:8000/">
-        <h1>QUEM RESOLVE</h1>
-      </a>
-    </div>
   </div>
-  <br><br>
+
+
+
   <div class="container">
     <div class="search-bar">
       <input type="text" placeholder="Pesquisar eventos" id="searchBarInput">
@@ -73,32 +79,31 @@
     </div>
   </div>
 
-  <h2>Eventos</h2>
-<div>
-  <div class="col">
+
+
+  <div class="GaleriaEventos clearfix">
     {% for evento in eventos %}
-    <a href="{% url 'evento-detalhes' evento.pk %}">
-      <div class="card shadow-sm">
-        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-          role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <title>Imagem</title>
-          <rect width="100%" height="100%" src="{{ imagem.thumbnail.url }}"></rect><text x="50%" y="50%" fill="#eceeef"
-            dy=".3em">Thumbnail</text>
-        </svg>
-        <div class="card-body">
-          <p class="card-text"><strong>Descrição:</strong> {{ evento.descricao }}</p>
-          <small class="text-body-secondary">
-            <p><strong>Data:</strong> {{ evento.data }}</p>
-          </small>
+    <div class="col">
+      <a href="{% url 'evento-detalhes' evento.pk %}">
+        <div class="card shadow-sm">
+          {%if evento.thumbnail %}
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+            role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <image href="{{ evento.thumbnail.url }}" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+            </image>
+            </svg>
+            {% endif %}
+            <div class="card-body">
+              <p class="card-text"><strong>Descrição:</strong> {{ evento.descricao }}</p>
+              <small class="text-body-secondary">
+                <p><strong>Data:</strong> {{ evento.data }}</p>
+              </small>
+            </div>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
     {% endfor %}
   </div>
-  </div>
-</div> 
-
-  
 
 
 
@@ -109,31 +114,28 @@
 
 
 
+  <script>
+    function searchEvents() {
+      const searchTerm = document.getElementById('searchBarInput').value.toLowerCase();
+      const eventCards = document.querySelectorAll('.card');
 
+      for (const eventCard of eventCards) {
+        const eventName = eventCard.querySelector('h2').textContent.toLowerCase();
+        const eventDate = eventCard.querySelector('p strong').textContent.toLowerCase();
 
-
-
-
-
-
-
-    <script>
-      function searchEvents() {
-        const searchTerm = document.getElementById('searchBarInput').value.toLowerCase();
-        const eventCards = document.querySelectorAll('.card');
-
-        for (const eventCard of eventCards) {
-          const eventName = eventCard.querySelector('h2').textContent.toLowerCase();
-          const eventDate = eventCard.querySelector('p strong').textContent.toLowerCase();
-
-          if (eventName.includes(searchTerm) || eventDate.includes(searchTerm)) {
-            eventCard.style.display = 'block';
-          } else {
-            eventCard.style.display = 'none';
-          }
+        if (eventName.includes(searchTerm) || eventDate.includes(searchTerm)) {
+          eventCard.style.display = 'block';
+        } else {
+          eventCard.style.display = 'none';
         }
       }
-    </script>
+    }
+    // Adiciona um evento de clique ao botão do usuário para exibir/ocultar o menu
+    document.getElementById('usuario-btn').addEventListener('click', function () {
+      var menu = document.getElementById('usuario-menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+  </script>
 </body>
 
 </html>
