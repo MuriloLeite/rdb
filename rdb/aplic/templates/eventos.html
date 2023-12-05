@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -27,7 +28,9 @@
         }
     </style>
 </head>
+
 <body>
+<<<<<<< HEAD
   <div>
     <ul>
       <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
@@ -43,6 +46,21 @@
     </ul>
     <div class="tituloIndex">
       <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
+=======
+    <div>
+        <ul>
+            <a href="doacao.html" class="btn-doacao btn-white">Doações</a></li>
+            <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
+            <a href="/login" class="btn-login btn-white">Entrar</a></li>
+            <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
+            <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+        </ul>
+        <div class="tituloIndex">
+            <a href="http://127.0.0.1:8000/">
+                <h1>QUEM RESOLVE</h1>
+            </a>
+        </div>
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
     </div>
   </div>
     <br><br>
@@ -56,7 +74,7 @@
             <ul>
                 {% for evento in eventos %}
                 <a href="{% url 'evento-detalhes' evento.pk %}">
-                    <div class="card" >
+                    <div class="card">
                         <div class="card-header">
                             <h2>{{ evento.nomeOrganizador }}</h2>
                         </div>
@@ -71,6 +89,7 @@
                 {% endfor %}
             </ul>
         </div>
+<<<<<<< HEAD
     </div>    
     <script>
         function searchEvents() {
@@ -89,5 +108,9 @@
           }
         }
       </script>
+=======
+    </div>
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 </body>
+
 </html>

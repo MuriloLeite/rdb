@@ -2,22 +2,18 @@
 <html>
 
 <head>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <style>
-        .myDiv {
-            border: 1px outset hsl(83, 203, 233, 0.377);
-            background-color: rgba(83, 203, 233, 0.377);
-            height: 500px;
-            margin-top: -25px;
-            margin-left: -10px;
-            margin-right: -10px;
-        }
-        
-    </style>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <style>
+    .myDiv {
+      background-image: url(static/foto_index.png);
+      background-position: center;
+    }
+  </style>
 </head>
 
 <body>
+<<<<<<< HEAD
   <div>
         <ul>
           <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
@@ -34,7 +30,33 @@
       <div class="tituloIndex">
         <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
       </div>
+=======
+  <div class="tituloIndex">
+    <ul>
+      <a href="doacao.html" class="btn-doacao btn-white">Doações</a></li>
+      <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
+      <a href="/login" class="btn-login btn-white">Entrar</a></li>
+      <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
+      <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+    </ul>
+    <a href="http://127.0.0.1:8000/">
+      <h1> <a href="http://127.0.0.1:8000/"> QUEM RESOLVE </a></h1>
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
   </div>
+  <div class="myDiv">
+    <a href="#QS" class="btn-quem-somos btn-seta"><img src="static/seta.png" alt="Rolar para baixo" width="70px" height="70px"></a>
+  </div>
+  <h2 id="QS"> Quem somos</h2>
+  <p> Uma pessoa que resolve é alguém que tem habilidade para solucionar problemas e lidar com situações desafiadoras de
+    forma eficiente. Essa pessoa é caracterizada por ser proativa, ter iniciativa, ser organizada, ter senso de
+    responsabilidade e ser capaz de trabalhar sob pressão. Além disso, uma pessoa que resolve também é alguém que sabe
+    trabalhar em equipe, ouvir as opiniões dos outros e buscar soluções que sejam benéficas para todos os envolvidos. O
+    mercado de trabalho valoriza muito profissionais que possuem essa característica, pois eles são capazes de trazer
+    resultados positivos para as empresas e contribuir para o crescimento e desenvolvimento delas. É importante destacar
+    que, para ser uma pessoa que resolve, é preciso ter uma postura positiva e estar sempre disposto a aprender e
+    evoluir tanto pessoal como profissionalmente.
+  </p>
+
 </body>
 
 </html>

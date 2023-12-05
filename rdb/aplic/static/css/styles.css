@@ -1,9 +1,12 @@
+
+
 body {
   font-family: sans-serif;
   font-weight: bold;
 }
 
 h1{
+<<<<<<< HEAD
 font-family:Verdana, Geneva, Tahoma, sans-serif; 
 color: white;
 margin-top: 25px;
@@ -15,17 +18,38 @@ border: 2px outset rgb(8, 177, 255, 0.534);
 background-color: rgba(8, 177, 255, 0.534);
 height: 100px;
 margin-left: -25px;
+=======
+  font-family:Verdana, Geneva, Tahoma, sans-serif; 
+  color: white;
+  margin-top: 25px;
+  margin-left: 50px;
+}
+
+.tituloIndex {
+  border: 2px outset rgb(8, 177, 255, 0.534);
+  background-color: rgba(8, 177, 255, 0.534);
+  height: 100px;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 /* cor do botao  */
 .btn-white {
+<<<<<<< HEAD
 background-color: #ffffff;
 color: #969393;
+=======
+  background-color: #ffffff;
+  color: #969393;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 /* cor do botão quando passa o mouse em cima */
 .btn-white::after {
+<<<<<<< HEAD
 background-color: rgb(242, 242, 242);
+=======
+  background-color: rgb(242, 242, 242);
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 
@@ -34,6 +58,7 @@ background-color: rgb(242, 242, 242);
 
 /* botão */
 .btn-evento {
+<<<<<<< HEAD
 text-transform: uppercase;
 text-decoration: none;
 padding: 15px 40px;
@@ -44,17 +69,34 @@ transition: all .2s;
 position: absolute;
 margin-top: 25px;
 
+=======
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  left: 370px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+  position: absolute;
+  margin-top: 25px;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 /* cor do fundo quando o botão flutua */
 .btn-evento:hover {
+<<<<<<< HEAD
 transform: translateY(-3px);
 box-shadow: 0 10px 20px rgb(0, 0, 0);
+=======
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgb(0, 0, 0);
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 
 /* tamanho da caixa branca do botao */
 .btn-evento::after {
+<<<<<<< HEAD
 content: "";
 display: inline-block;
 height: 100%;
@@ -65,12 +107,29 @@ top: 0;
 left: 0;
 z-index: -1;
 transition: all .4s;
+=======
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all .4s;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 /* movimento de expansão do botão */
 .btn-evento:hover::after {
+<<<<<<< HEAD
 transform: scaleX(1.4) scaleY(1.6);
 opacity: 0;
+=======
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 
@@ -78,6 +137,7 @@ opacity: 0;
 
 /* botão */
 .btn-parceria {
+<<<<<<< HEAD
 text-transform: uppercase;
 text-decoration: none;
 padding: 15px 40px;
@@ -87,6 +147,17 @@ border-radius: 100px;
 transition: all .2s;
 position: absolute;
 margin-top: 25px;
+=======
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  left: 550px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+  position: absolute;
+  margin-top: 25px;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 
 }
 
@@ -123,6 +194,7 @@ opacity: 0;
 
 /* botão */
 .btn-doacao {
+<<<<<<< HEAD
 text-transform: uppercase;
 text-decoration: none;
 padding: 15px 40px;
@@ -132,6 +204,17 @@ border-radius: 100px;
 transition: all .2s;
 position: absolute;
 margin-top: 25px;
+=======
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  left: 750px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+  position: absolute;
+  margin-top: 25px;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 
 }
 
@@ -168,6 +251,7 @@ opacity: 0;
 
 /* botão */
 .btn-login {
+<<<<<<< HEAD
 text-transform: uppercase;
 text-decoration: none;
 padding: 15px 40px;
@@ -177,6 +261,17 @@ border-radius: 100px;
 transition: all .2s;
 position: absolute;
 margin-top: 25px;
+=======
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  right: 230px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+  position: absolute;
+  margin-top: 25px;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
 
 /* cor do fundo quando o botão flutua */
@@ -213,6 +308,7 @@ opacity: 0;
 
 /* botão */
 .btn-registar {
+<<<<<<< HEAD
 text-transform: uppercase;
 text-decoration: none;
 padding: 15px 25px;
@@ -222,6 +318,17 @@ border-radius: 100px;
 transition: all .2s;
 position: absolute;
 margin-top: 25px;
+=======
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 25px;
+  right: 50px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+  position: absolute;
+  margin-top: 25px;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 
 }
 
@@ -409,6 +516,7 @@ margin: 5px 0;
 
 
 .btn-quem-somos{
+<<<<<<< HEAD
 background-color: rgba(251, 253, 254, 0.377);
 background-image: none;
 display: inline-block;
@@ -417,4 +525,14 @@ margin-top: 750px;
 margin-left: 920px;
 border-radius: 50%;
 padding: 10px;
+=======
+  background-color: rgba(251, 253, 254, 0.377);
+  background-image: none;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 750px;
+  margin-left: 950px;
+  border-radius: 50%;
+  position: center;
+>>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
 }
