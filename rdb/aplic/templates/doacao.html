@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <style>
+   
+
+
+    .content {
+      display: flex;
+      align-items: center;
+      width: 50%;
+      justify-content: space-between;
+      padding: 10px;
+      box-sizing: border-box;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      margin-left: 25%;
+      background-color: rgba(8, 177, 255, 0.534);
+      border-radius: 20px;
+    }
+
+    .donate-section {
+      text-align: justify;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      width: 50%;
+    }
+
+    .donate-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .donate-text {
+      margin-top: 10px;
+      text-align: justify;
+      margin-right: 30px;
+    }
+
+    .donate-image {
+      max-width: 50%;
+      height: auto;
+      margin-top: 50px;
+    }
+
+    .gallery {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+      margin-top: 20px;
+      margin-bottom: 50px;
+      background-color: lightgray;
+      border-radius: 20px;
+      
+    }
+
+    .gallery-item {
+      flex-basis: calc(33.33% - 20px);
+      margin-bottom: 20px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .gallery-item img {
+      max-width: 100%;
+      max-height: auto;
+    }
+
+    .gallery-item-text {
+      margin-top: 10px;
+      text-align: center;
+      margin-right: 15px;
+      max-width: 320px;
+    }
+
+
+    .gallery-item-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    .gallery-item-text div {
+      text-align: justify;
+    }
+
+    .donation-section {
+      background-color: rgba(8, 177, 255, 0.534);
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .donation-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .donation-text {
+      margin-top: 10px;
+    }
+
+    .donation-button {
+      display: block;
+      margin: 20px auto;
+      padding: 15px 20px;
+      max-width: 150px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    
+  </style>
+</head>
+
+<body>
+
+  <div class="BarraNavegacao">
+    <div class="logo"><a href="/"><img src="{% static 'Logo.png' %}"></div>
+    <ul>
+      <a href="/eventos" class="btn-evento btn-branco">Eventos</a>
+      <a href="/doacao" class="btn-doacao btn-branco">Doações</a>
+      <a href="/parcerias" class="btn-parceria btn-branco">Parcerias</a>
+      {% if not user.is_authenticated %}
+      <a href="/login" class="btn-login btn-branco">Entrar</a>
+      <a href="/registro" class="btn-registar btn-branco">Registrar-se</a>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+      <div class="usuario-container">
+        <button class="usuario-btn" id="usuario-btn">
+          <img src="/static/perfil.png" alt="Imagem de perfil"><br>
+          {{ user.username }}
+        </button>
+        <div id="usuario-menu">
+          <a href="{% url 'meus_dados' %}">Meus Dados</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
+      {% endif %}
+    </ul>
+  </div>
+
+  
+
+  <div class="content">
+    <div class="donate-section">
+      <div class="donate-title">Quer doar?</div>
+      <div class="donate-text">
+        O projeto Quem Resolve tem como objetivo levar a alegria da brincadeira de volta para as ruas. Por meio de
+        oficinas, atividades lúdicas e intervenções artísticas, o projeto busca promover um ambiente seguro e divertido
+        para que as crianças possam brincar livremente.
+      </div>
+    </div>
+    <img src="/static/imagem-principal-donation.jpg" alt="Imagem do Projeto"
+      class="donate-image">
+  </div>
+
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="/static/imagem-1-donation.jpg" alt="Imagem 1">
+      <div class="gallery-item-text">
+        <div class="gallery-item-title">Como doar?</div>
+        <div>clique no botão abaixo, selecione o método de pagamento e o valor da doação, e confirme.</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="/static/imagem-2-donation.jpg" alt="Imagem 2">
+      <div class="gallery-item-text">
+        <div class="gallery-item-title">Valor mínimo de doação?</div>
+        <div>clique no botão abaixo, selecione o método de pagamento e o valor da doação, e confirme.</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="/static/imagem-3-donation.jpg" alt="Imagem 3">
+      <div class="gallery-item-text">
+        <div class="gallery-item-title">Existem outras formas de me envolver?</div>
+        <div>Há várias formas de nos auxiliar além de doações, como divulgação do projeto e participação dos eventos.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="donation-section">
+    <div class="donation-title">Doe!</div>
+    <div class="donation-text">Sua doação pode fazer a diferença em nosso projeto.</div>
+    <a href="https://www.paypal.com/br/home" class="donation-button">Faça sua doação</a>
+  </div>
+
+
+  <script>
+    // Adiciona um evento de clique ao botão do usuário para exibir/ocultar o menu
+    document.getElementById('usuario-btn').addEventListener('click', function () {
+      var menu = document.getElementById('usuario-menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+  </script>
+</body>
+
+</html>
