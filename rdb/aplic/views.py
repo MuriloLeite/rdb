@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
-from .forms import UserCreationForm, FeedbackForm
-from .models import Evento, Feedback, Imagem, Comentario
+from .forms import FeedbackForm
+from .models import Evento, Feedback, Imagem, Comentario, Parceria, Pessoa
 from django.views.decorators.http import require_POST
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.views import View
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib import messages
 class IndexView(TemplateView):
     template_name = 'index.html'
 class GaleriaView(TemplateView):
@@ -34,15 +37,35 @@ class EventoDetailView(DetailView):
 
 def registro(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('http://127.0.0.1:8000/')  # Redirecione para a página de dashboard ou outra página desejada após o registro
-    else:
-        form = UserCreationForm()
+        nome = request.POST.get("nome")
+        cpf = request.POST.get("cpf")
+        username = request.POST.get("username")
+        password = request.POST.get("senha")
 
-    return render(request, 'registro.html', {'form': form})
+        # Verifique se o campo 'username' está definido
+        if username:
+            # Verifique se o username já existe
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'O nome de usuário já existe. Escolha outro.')
+                return redirect('registro')
+
+            # Criação do usuário e pessoa se o username não existir
+            user_instance = User.objects.create_user(username=username, password=password)
+            pessoa_instance = Pessoa.objects.create(nome=nome, cpf=cpf, user=user_instance)
+            user_instance.save()
+            pessoa_instance.save()
+
+            # Adiciona uma mensagem de sucesso
+            messages.success(request, 'Registro bem-sucedido. Faça login para continuar.')
+
+            return redirect('login')
+        else:
+            # Adiciona uma mensagem de erro se o campo 'username' não for preenchido
+            messages.error(request, "O campo 'username' deve ser preenchido.")
+            return redirect('registro')
+    else:
+        # Lógica para renderizar o formulário HTML
+        return render(request, "registro.html")
 
 def login_view(request):
     if request.method == 'POST':
@@ -95,3 +118,17 @@ def adicionar_comentario(request, imagem_id, evento_id):
         return redirect('evento-detalhes', pk=evento_id)
     else:
         pass
+
+class MeusDadosView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'meusdados.html')
+    
+def parcerias(request):
+    parcerias = Parceria.objects.all()
+    return render(request, 'parcerias.html', {'parcerias': parcerias})
+
+def eventos(request):
+    search_term = request.GET.get('search', '')
+    print(f"Termo de pesquisa: {search_term}")
+    eventos = Evento.objects.filter(nomeOrganizador__icontains=search_term)
+    return render(request, 'eventos.html', {'eventos': eventos, 'search_term': search_term})

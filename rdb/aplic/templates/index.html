@@ -1,61 +1,275 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <title>Sua Página</title>
   <style>
-    .myDiv {
-      background-image: url(static/foto_index.png);
-      background-position: center;
+    .header-overlay {
+      position: relative;
     }
+
+    .header-overlay img {
+      width: 100vw;
+      height: auto;
+      margin-left: -10px;
+    }
+
+    .header-overlay::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 710px;
+      margin-left: -10px;
+
+      /* Cor preta com 50% de opacidade (ajuste conforme necessário) */
+      z-index: 1;
+      /* Certifique-se de que o overlay esteja acima da imagem */
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      z-index: 2;
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      z-index: 2;
+      font-size: 3em;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    p {
+      font-size: 25px;
+      color: #fff;
+    }
+
+
+    h1 {
+      color: #fff;
+    }
+
+    h2 {
+      color: black;
+      font-size: 35px;
+    }
+
+
+
+    .button {
+      display: inline-block;
+      padding: 15px 20px;
+      /* Reduzi o padding para diminuir o tamanho */
+      font-size: 14px;
+      /* Reduzi o tamanho da fonte */
+      margin-top: 300px;
+      /* Adicionei uma margem superior */
+      background-color: #DB545A;
+      /* Cor de fundo azul, ajuste conforme necessário */
+      color: #fff;
+      /* Cor do texto branco */
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #DB545A;
+      /* Cor de fundo azul mais escura no hover, ajuste conforme necessário */
+    }
+
+    /* ... (seu estilo anterior) ... */
+
+    /* Estilo para a nova div e suas partes */
+    .conteudo-quadro {
+      display: grid;
+      grid-template-areas:
+        "superior-esquerda superior-direita"
+        "inferior-esquerda inferior-direita";
+      grid-template-columns: 1fr 1fr;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      margin-left: 100px;
+      margin-right: 100px;
+    }
+
+    .parte {
+      border-radius: 10px;
+      box-sizing: border-box;
+      margin: 10px;
+      /* Adiciona uma borda */
+      overflow: hidden;
+      /* Evita que as bordas afetem o layout */
+    }
+
+    /* Estilo específico para a parte superior esquerda */
+    .superior-esquerda {
+      grid-area: superior-esquerda;
+    }
+
+    .superior-esquerda img {
+      width: 100%;
+      height: 500px;
+      display: block;
+    }
+
+    /* Estilo específico para a parte superior direita */
+    .superior-direita {
+      background-color: rgba(8, 177, 255, 0.534);
+      grid-area: superior-direita;
+      text-align: left;
+      padding: 10px;
+    }
+
+    /* Estilo específico para a parte inferior esquerda */
+    .inferior-esquerda {
+      background-color: lightgray;
+      grid-area: inferior-esquerda;
+    }
+
+    /* Estilo específico para a parte inferior direita */
+    .inferior-direita {
+      grid-area: inferior-direita;
+    }
+
+    .inferior-direita img {
+      width: 100%;
+      height: 500px;
+    }
+
+
+    footer {
+    background-color: rgba(8, 177, 255, 0.534);
+    padding: 20px;
+    text-align: center;
+    bottom: 3 ;
+    width: 100%;
+}
+
+
+
   </style>
 </head>
 
 <body>
-<<<<<<< HEAD
-  <div>
-        <ul>
-          <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
-          <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
-          {% if not user.is_authenticated %}
-            <a href="/login" class="btn-login btn-white">Entrar</a></li>
-            <a href="/registro" class="btn-registar btn-white">Registrar-se</a></li>
-          {% endif %}
-          <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
-          {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}">Logout</a>
-          {% endif %}
-        </ul>
-      <div class="tituloIndex">
-        <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
-      </div>
-=======
-  <div class="tituloIndex">
+  <div class="BarraNavegacao">
+    <div class="logo"><a href="/"><img src="{% static 'Logo.png' %}"></div>
     <ul>
-      <a href="doacao.html" class="btn-doacao btn-white">Doações</a></li>
-      <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
-      <a href="/login" class="btn-login btn-white">Entrar</a></li>
-      <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
-      <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+      <a href="/eventos" class="btn-evento btn-branco">Eventos</a>
+      <a href="/doacao" class="btn-doacao btn-branco">Doações</a>
+      <a href="/parcerias" class="btn-parceria btn-branco">Parcerias</a>
+      {% if not user.is_authenticated %}
+      <a href="/login" class="btn-login btn-branco">Entrar</a>
+      <a href="/registro" class="btn-registar btn-branco">Registrar-se</a>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+      <div class="usuario-container">
+        <button class="usuario-btn" id="usuario-btn">
+          <img src="/static/perfil.png" alt="Imagem de perfil"><br>
+          {{ user.username }}
+        </button>
+        <div id="usuario-menu">
+          <a href="{% url 'meus_dados' %}">Meus Dados</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
+      {% endif %}
     </ul>
-    <a href="http://127.0.0.1:8000/">
-      <h1> <a href="http://127.0.0.1:8000/"> QUEM RESOLVE </a></h1>
->>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
   </div>
-  <div class="myDiv">
-    <a href="#QS" class="btn-quem-somos btn-seta"><img src="static/seta.png" alt="Rolar para baixo" width="70px" height="70px"></a>
+
+
+
+  <!-- Header com imagem -->
+  <header class="header">
+    <div class="header-overlay">
+      <img src="/static/quem_resolve.jpg" alt="Imagem de cabeçalho">
+      <div class="overlay-text">
+        <h1>Quem Resolve</h1>
+        <p>"Guiando passos, inspirando sorrisos juntos, pela jornada de cada criança."</p>
+        <a href="#section-baixo-header" class="button">Veja abaixo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ... (seu código anterior) ... -->
+  <div class="content" id="section-baixo-header">
+    <!-- Nova div abaixo do header -->
+    <div class="conteudo-quadro">
+      <!-- Parte superior esquerda -->
+      <div class="parte superior-esquerda">
+        <img src="/static/quem_resolve.jpg" alt="Imagem superior esquerda">
+      </div>
+
+      <!-- Parte superior direita -->
+      <div class="parte superior-direita">
+        <h1>Quem somos?</h1>
+        <p>
+          Somos uma equipe composta por alunos do Instituto Metodista Granbery de diversos cursos, como Administração,
+          Educação Física, Psicologia e Sistemas de Informação. O grupo foi criado através da matéria de extensão
+          universitária onde sua ideologia é a troca de conhecimento dos estudantes com a comunidade. Em paralelo a
+          isso,
+          surgiu a ideia de fazermos uma parceria com o programa boniteza "Rua de Brincar" que é realizado pela
+          prefeitura de Juiz de Fora junto a diversas secretarias e patrocinadores e todos possuem o objetivo de
+          transformar as vias públicas em locais para o lazer e prática esportiva da população.
+        </p>
+      </div>
+
+
+      <!-- Parte inferior esquerda -->
+      <div class="parte inferior-esquerda">
+        <h2> O que fazemos ?</h2>
+        <p style="color: black;">
+          O grupo propões atividades que estimulam o raciocínio lógico e a criatividade das crianças, como
+          quebras-cabeças, desenhos e jogo da memória, propostas pelo grupo de Psicologia, além de algumas brincadeiras
+          propostas pelo grupo de Educação Física que variam de amarelinha, pular corda e etc. Todas as atividades tem o
+          intuito de auxiliar de alguma forma o desenvolvimento da criança através das brincadeiras, seja de forma
+          social, as incentivando a interagir com outras crianças; mental, trabalhando diferentes áreas do cérebro como
+          raciocínio lógico e memória; além de físico, estimulando a cuidar do corpo através de brincadeiras saudáveis e
+          divertidas.</p>
+      </div>
+
+      <!-- Parte inferior direita -->
+      <div class="parte inferior-direita">
+        <img src="/static/oque_fazemos.jpg" alt="Imagem inferior direita">
+      </div>
+    </div>
   </div>
-  <h2 id="QS"> Quem somos</h2>
-  <p> Uma pessoa que resolve é alguém que tem habilidade para solucionar problemas e lidar com situações desafiadoras de
-    forma eficiente. Essa pessoa é caracterizada por ser proativa, ter iniciativa, ser organizada, ter senso de
-    responsabilidade e ser capaz de trabalhar sob pressão. Além disso, uma pessoa que resolve também é alguém que sabe
-    trabalhar em equipe, ouvir as opiniões dos outros e buscar soluções que sejam benéficas para todos os envolvidos. O
-    mercado de trabalho valoriza muito profissionais que possuem essa característica, pois eles são capazes de trazer
-    resultados positivos para as empresas e contribuir para o crescimento e desenvolvimento delas. É importante destacar
-    que, para ser uma pessoa que resolve, é preciso ter uma postura positiva e estar sempre disposto a aprender e
-    evoluir tanto pessoal como profissionalmente.
-  </p>
+
+
+
+
+  <script>
+    // Adiciona um evento de clique ao botão do usuário para exibir/ocultar o menu
+    document.getElementById('usuario-btn').addEventListener('click', function () {
+      var menu = document.getElementById('usuario-menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+  </script>
+
+
+
+  <footer>
+    <p>&copy; 2023 Quem Resolve. Granbery | (32)xxxxx-xxxx | Quemresolve@gmail.com</p>
+  </footer>
+
+
+
 
 </body>
 

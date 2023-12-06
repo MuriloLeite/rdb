@@ -1,36 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, User
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, password, phone=None):
-        user = self.model(
-            email=email,
-            username=username,
-            phone=phone
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
 
-    def create_superuser(self, email, username, password, phone=None):
-        user = self.create_user(
-            email=email,
-            username=username,
-            password=password,
-            phone=phone
-        )
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
 
 class Pessoa(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    
+    nome = models.CharField(max_length=32, null=True)
+    cpf = models.CharField(max_length=14, default='')
 
 class Pessoafisica(Pessoa):
-    nome = models.CharField(max_length=32, null=True)
-    cpf = models.CharField(max_length=14)
 
     class Meta:
         verbose_name = 'Pessoa Física'
@@ -39,7 +17,6 @@ class Pessoafisica(Pessoa):
     def __str__(self):
         return (self.cpf)
 class Pessoajuridica(Pessoa):
-    nome = models.CharField(max_length=32, null=True)
     cnpj = models.CharField(max_length=18)
     razaoSocial = models.CharField(max_length=100)
     nomeFantasia = models.CharField(max_length=100)
@@ -51,19 +28,18 @@ class Pessoajuridica(Pessoa):
     def __str__(self):
         return f"{self.razaoSocial}, {self.nomeFantasia}"
 
- 
-
 class Evento(models.Model):
     nomeOrganizador = models.CharField(max_length=30)
     data = models.DateField()
     cep = models.CharField(max_length=9)
-    numero = models.IntegerField()
+    endereco = models.CharField(max_length=50, default='')
     descricao = models.TextField(null=True)
+    thumbnail = models.ImageField(upload_to='event_images/', blank=True, null=True)
     class Meta:
         verbose_name = 'Evento'
         verbose_name_plural = 'Eventos'
     def __str__(self):
-        return f"{self.nomeOrganizador}, {self.data}, {self.cep}, {self.numero}, {self.descricao}"
+        return f"{self.nomeOrganizador}, {self.data}"
     
 class Feedback(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -84,16 +60,19 @@ class Imagem(models.Model):
         verbose_name_plural = 'Imagens'
     def __str__(self):
         return (self.legenda)
+    
 class Parceria(models.Model):
     nome = models.CharField(max_length=100)
     email = models.EmailField(max_length=50)
-    telefone = models.IntegerField()
+    telefone = models.CharField(max_length=20)  # Alterado para CharField
+
     class Meta:
         verbose_name = 'Parceria'
         verbose_name_plural = 'Parcerias'
 
     def __str__(self):
-        return f"{self.nome},{self.email},{self.telefone}"
+        return f"{self.nome}, {self.email}, {self.telefone}"
+
     
 class Atracao(models.Model):
     texto = models.TextField(max_length=100, default="")
@@ -123,16 +102,6 @@ class Comentario(models.Model):
     def __str__(self):
         return f'Comentario por {self.autor} em {self.data_publicacao}'
 
-class Endereco(models.Model):
-    estado = models.CharField(max_length=30)
-    cidade = models.CharField(max_length=60)
-    bairro = models.CharField(max_length=40)
-    rua = models.CharField(max_length=200)
-    numero = models.CharField(max_length=8)
-    complemento = models.CharField(max_length=70, blank=True)
-    class Meta:
-        verbose_name = 'Endereço'
-        verbose_name_plural = 'Endereços'
 class Doacao(models.Model):
     valor = models.IntegerField()
     doador = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from aplic.models import  Pessoafisica, Doacao, Pessoajuridica, Endereco, Imagem, Feedback,Comentario, Evento, Parceria, Atracao, Equipamento
+from aplic.models import  Pessoafisica, Doacao, Pessoajuridica, Imagem, Feedback,Comentario, Evento, Parceria, Atracao, Equipamento
 
 
 @admin.register(Pessoafisica)
@@ -35,10 +35,6 @@ class ComentarioAdmin(admin.ModelAdmin):
     list_display = ['texto', 'data_publicacao', 'imagem']
     list_filter = ['data_publicacao']
     search_fields = ['texto']
-@admin.register(Endereco)
-class EnderecoAdmin(admin.ModelAdmin):
-    list_display = ['estado', 'cidade', 'bairro', 'rua', 'numero', 'complemento']
-    list_filter = ['estado']
 @admin.register(Doacao)
 class DoacaoAdmin(admin.ModelAdmin):
     list_display = ['valor']

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -13,15 +14,32 @@
             background-color: #f0f0f0;
         }
 
-        /* Estilize o cabeçalho com o nome do evento */
         h1 {
-            background-color: #007BFF;
+            background: linear-gradient(45deg, #007BFF, #00FFF0);
             color: #fff;
             text-align: center;
             padding: 20px;
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Estilize os detalhes do evento */
+        .back-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
         h2 {
             font-size: 24px;
             color: #007BFF;
@@ -31,39 +49,6 @@
             margin-bottom: 10px;
         }
 
-        /* Estilize a seção de feedbacks */
-        .feedback-section {
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        /* Estilize cada feedback */
-        .feedback {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        /* Estilize o botão "Adicionar Feedback" */
-        .add-feedback-button {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            display: inline-block;
-        }
-
-        .add-feedback-button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Estilize as seções e adicione divisões visuais */
         .section {
             border: 1px solid #ccc;
             background-color: #fff;
@@ -72,28 +57,47 @@
             margin-top: 20px;
         }
 
-        .section h2 {
-            font-size: 24px;
-            color: #007BFF;
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
         }
 
-        /* Estilize as imagens da galeria para que se comportem como botões */
+        .gallery-item {
+            flex: 0 0 calc(33.33% - 20px);
+            margin: 10px;
+            box-sizing: border-box;
+        }
+
         .gallery img {
             cursor: pointer;
             max-width: 100%;
             border: 1px solid #ccc;
             border-radius: 5px;
-            margin: 10px 0;
+            transition: transform 0.3s ease-in-out;
         }
 
-        /* Estilize a seção de comentários para que seja inicialmente oculta */
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
         .comments {
             display: none;
             background-color: #f0f0f0;
             padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
         }
 
-        /* Estilize os botões "Adicionar Comentário" e "Adicionar Feedback" */
+        .comments p {
+            margin: 5px 0;
+        }
+
+        .comment-item {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
         .add-comment-button,
         .add-feedback-button {
             background-color: #007BFF;
@@ -104,12 +108,14 @@
             margin-top: 20px;
             display: inline-block;
             margin-right: 10px;
+            cursor: pointer;
         }
 
         .add-comment-button:hover,
         .add-feedback-button:hover {
             background-color: #0056b3;
         }
+
         #campo-feedback {
             margin-top: 20px;
         }
@@ -118,17 +124,53 @@
             width: 100%;
             margin-bottom: 10px;
         }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        h1:hover {
+            animation: pulse 1s infinite;
+        }
+
+        .feedback-section {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .feedback {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
     </style>
 </head>
+
 <body>
-    <a href="{% url 'eventos' %}">Voltar</a>
+
     <h1>{{ evento.nomeOrganizador }}</h1>
+    <a href="{% url 'eventos' %}" class="back-button">Voltar</a>
 
     <div class="section">
         <h2>Detalhes do Evento</h2>
         <p><strong>Data:</strong> {{ evento.data }}</p>
         <p><strong>CEP:</strong> {{ evento.cep }}</p>
-        <p><strong>Número:</strong> {{ evento.numero }}</p>
+        <p><strong>Endereço:</strong> {{ evento.endereco }}</p>
         <p><strong>Descrição:</strong> {{ evento.descricao }}</p>
     </div>
 
@@ -136,75 +178,81 @@
         <h2>Atrações</h2>
         <ul>
             {% for atracao in evento.atracao_set.all %}
-                <li>{{ atracao.texto }}</li>
-                <ul>
-                    {% for equipamento in atracao.equipamento_set.all %}
-                        <li>{{ equipamento.texto }}</li>
-                    {% endfor %}
-                </ul>
+            <li>{{ atracao.texto }}</li>
+            <ul>
+                {% for equipamento in atracao.equipamento_set.all %}
+                <li>{{ equipamento.texto }}</li>
+                {% endfor %}
+            </ul>
             {% endfor %}
         </ul>
     </div>
 
     <div class="section">
         <h2>Galeria de Imagens</h2>
-        <div class="gallery">
+        <div class="gallery-container">
             {% for imagem in evento.imagem_set.all %}
+            <div class="gallery-item">
                 <img src="{{ imagem.formato.url }}" alt="{{ imagem.legenda }}" onclick="toggleComments('{{ imagem.id }}')">
                 <p>{{ imagem.legenda }}</p>
-                <div id="comments_{{ imagem.id }}" style="display: none;">
+                <div id="comments_{{ imagem.id }}" class="comments" style="display: none;">
                     {% for comentario in imagem.comentario_set.all %}
+                    <div class="comment-item">
                         <p><strong>{{ comentario.autor.username }} </strong> disse em {{ comentario.data_criacao }}:</p>
                         <p>{{ comentario.texto }}</p>
+                    </div>
                     {% endfor %}
                     {% if user.is_authenticated %}
-                        <form method="post" action="{% url 'adicionar_comentario' imagem.id evento.id %}">
-                            {% csrf_token %}
-                            <label for="comment_text">Adicionar Comentário:</label>
-                            <input type="text" name="texto" id="comment_text">
-                            <input type="submit" value="Enviar">
-                        </form>
+                    <form method="post" action="{% url 'adicionar_comentario' imagem.id evento.id %}">
+                        {% csrf_token %}
+                        <label for="comment_text">Adicionar Comentário:</label>
+                        <input type="text" name="texto" id="comment_text">
+                        <input type="submit" value="Enviar">
+                    </form>
                     {% else %}
-                        <p>Faça login para adicionar comentários.</p>
+                    <p>Faça login para adicionar comentários.</p>
                     {% endif %}
                 </div>
+            </div>
             {% endfor %}
         </div>
     </div>
 
-    <div class="section">
+    <div class="section feedback-section">
         <h2>Feedbacks</h2>
         <ul>
             {% for feedback in evento.feedback_set.all %}
-                <li class="feedback">
-                    <p><strong>{{ feedback.autor.username }} </strong> disse em {{ feedback.data_criacao }}:</p>
-                    <p>{{ feedback.texto }}</p>
-                </li>
+            <li class="feedback">
+                <p><strong>{{ feedback.autor.username }} </strong> disse em {{ feedback.data_criacao }}:</p>
+                <p>{{ feedback.texto }}</p>
+            </li>
             {% endfor %}
         </ul>
         {% if user.is_authenticated %}
-            <form method="post" id="form-feedback" action="{% url 'adicionar_feedback' evento.id %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="button" class="add-feedback-button" id="mostrar-feedback">Adicionar Feedback</button>
-                <div id="campo-feedback" style="display: none;">
-                    <textarea id="id_texto" name="texto" rows="4" cols="50" placeholder="Digite seu feedback aqui"></textarea>
-                    <button type="submit">Enviar Feedback</button>
-                </div>
-            </form>
+        <form method="post" id="form-feedback" action="{% url 'adicionar_feedback' evento.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="button" class="add-feedback-button" id="mostrar-feedback">Adicionar Feedback</button>
+            <div id="campo-feedback" style="display: none;">
+                <textarea id="id_texto" name="texto" rows="4" cols="50" placeholder="Digite seu feedback aqui"></textarea>
+                <button type="submit">Enviar Feedback</button>
+            </div>
+        </form>
         {% else %}
-            <p>Faça login para adicionar feedbacks.</p>
+        <p>Faça login para adicionar feedbacks.</p>
         {% endif %}
     </div>
 
     <script>
-        document.getElementById('mostrar-feedback').addEventListener('click', function() {
-        document.getElementById('campo-feedback').style.display = 'block';
+        document.getElementById('mostrar-feedback').addEventListener('click', function () {
+            document.getElementById('campo-feedback').style.display = 'block';
         });
+
         function toggleComments(imagemId) {
             var commentsDiv = document.getElementById('comments_' + imagemId);
             commentsDiv.style.display = (commentsDiv.style.display === 'none' || commentsDiv.style.display === '') ? 'block' : 'none';
         }
-    </script>   
+    </script>
 </body>
+
 </html>

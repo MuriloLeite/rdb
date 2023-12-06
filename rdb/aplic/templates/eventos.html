@@ -2,115 +2,251 @@
 <html lang="en">
 
 <head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <title>Página de Eventos</title>
-    <style>
-        .search-bar {
-            display: flex;
-            margin-bottom: 20px;
-        }
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <title>Página de Eventos</title>
+  <style>
+    .search-bar {
+      display: flex;
+      margin-bottom: 20px;
+    }
 
-            .search-bar input[type="text"] {
-            flex: 1;
-            padding: 5px;
-            border: 1px solid #ccc;
-        }
+    .search-bar input[type="text"] {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
 
-            .search-bar button {
-            padding: 5px 10px;
-            border: 1px solid #007bff;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-        }
-    </style>
+    .search-bar button {
+      padding: 5px 10px;
+      border: 1px solid #007bff;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    div.GaleriaEventos {
+      height: 100%;
+    }
+
+    div.col {
+      width: 400px;
+      display: inline-block;
+      margin-right: 20px;
+      /* Optional margin between columns */
+      vertical-align: top;
+      /* Align columns at the top */
+    }
+
+    /* Clearfix to handle wrapping of columns */
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .search-bar {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .search-bar form {
+      display: flex;
+      width: 100%;
+    }
+
+    .search-bar input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid rgba(8, 177, 255, 0.534);
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      border: 1px solid rgba(8, 177, 255, 0.534);
+      background-color: rgba(8, 177, 255, 0.534);
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .search-bar button:hover {
+      background-color: rgba(8, 177, 255, 0.534);
+    }
+
+    .GaleriaEventos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .col {
+      width: calc(33.33% - 20px);
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-text {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .text-body-secondary {
+      color: #555;
+    }
+
+    /* Estilo para a imagem do evento */
+    .bd-placeholder-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 123, 255, 0.7);
+      /* Cor azul com opacidade */
+      z-index: 1;
+      /* Certifique-se de que a sobreposição está acima dos eventos */
+      display: none;
+      /* Inicialmente oculto */
+    }
+
+    .GaleriaEventos:hover .overlay {
+      display: block;
+      /* Mostra a sobreposição quando passa o mouse sobre a galeria de eventos */
+    }
+
+    footer {
+    background-color: rgba(8, 177, 255, 0.534);
+    padding: 20px;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+}
+  </style>
 </head>
 
 <body>
-<<<<<<< HEAD
-  <div>
+  <div class="BarraNavegacao">
+    <div class="logo"><a href="/"><img src="{% static 'Logo.png' %}"></div>
     <ul>
-      <a href="/doacao" class="btn-doacao btn-white">Doações</a></li>
-      <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
+      <a href="/eventos" class="btn-evento btn-branco">Eventos</a>
+      <a href="/doacao" class="btn-doacao btn-branco">Doações</a>
+      <a href="/parcerias" class="btn-parceria btn-branco">Parcerias</a>
       {% if not user.is_authenticated %}
-        <a href="/login" class="btn-login btn-white">Entrar</a></li>
-        <a href="/registro" class="btn-registar btn-white">Registrar-se</a></li>
+      <a href="/login" class="btn-login btn-branco">Entrar</a>
+      <a href="/registro" class="btn-registar btn-branco">Registrar-se</a>
       {% endif %}
-      <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
+
       {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a>
+      <div class="usuario-container">
+        <button class="usuario-btn" id="usuario-btn">
+          <img src="/static/perfil.png" alt="Imagem de perfil"><br>
+          {{ user.username }}
+        </button>
+        <div id="usuario-menu">
+          <a href="{% url 'meus_dados' %}">Meus Dados</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
       {% endif %}
     </ul>
-    <div class="tituloIndex">
-      <a href="http://127.0.0.1:8000/"><h1>QUEM RESOLVE</h1></a> 
-=======
-    <div>
-        <ul>
-            <a href="doacao.html" class="btn-doacao btn-white">Doações</a></li>
-            <a href="/eventos" class="btn-evento btn-white">Eventos</a></li>
-            <a href="/login" class="btn-login btn-white">Entrar</a></li>
-            <a href="/registro" class="btn-registar btn-white">Resgistre-se</a></li>
-            <a href="/parcerias" class="btn-parceria btn-white">Parcerias</a></li>
-        </ul>
-        <div class="tituloIndex">
-            <a href="http://127.0.0.1:8000/">
-                <h1>QUEM RESOLVE</h1>
-            </a>
-        </div>
->>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
-    </div>
   </div>
-    <br><br>
-    <div class="container">
-        <div class="search-bar">
-          <input type="text" placeholder="Pesquisar eventos" id="searchBarInput">
-          <button type="button" onclick="searchEvents()">Buscar</button>
-        </div>
-        <div class="event">
-            <h2>Eventos</h2>
-            <ul>
-                {% for evento in eventos %}
-                <a href="{% url 'evento-detalhes' evento.pk %}">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>{{ evento.nomeOrganizador }}</h2>
-                        </div>
-                        <div class="card-body">
-                            <p><strong>Data:</strong> {{ evento.data }}</p>
-                        </div>
-                        <div>
-                            <p><strong>Descrição:</strong> {{ evento.descricao }}</p>
-                        </div>
-                    </div>
-                </a>
-                {% endfor %}
-            </ul>
-        </div>
-<<<<<<< HEAD
-    </div>    
+  <br>
+
+  <div class="container">
+    <div class="search-bar">
+      <form method="get" action="{% url 'eventos' %}">
+        <input type="text" name="search" placeholder="Pesquisar eventos" id="searchBarInput" value="{{ search_term }}">
+        <button type="submit" style="background-color:  rgba(8, 177, 255, 0.534);">Buscar</button>
+      </form>
+    </div>
+
+
+    <div class="GaleriaEventos clearfix">
+      {% for evento in eventos %}
+      <div class="col">
+        <a href="{% url 'evento-detalhes' evento.pk %}">
+          <div class="card shadow-sm">
+            {%if evento.thumbnail %}
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+              role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <image href="{{ evento.thumbnail.url }}" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+              </image>
+            </svg>
+            {% endif %}
+            <div class="card-body">
+              <p class="card-text"><strong>Nome:</strong> {{ evento.nomeOrganizador }}</p>
+              <p class="card-text"><strong>Descrição:</strong> {{ evento.descricao }}</p>
+              <small class="text-body-secondary">
+                <p><strong>Data:</strong> {{ evento.data }}</p>
+              </small>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+
+    <footer>
+      <p>&copy; 2023 Quem Resolve. Granbery | (32)xxxxx-xxxx | Quemresolve@gmail.com</p>
+    </footer>
+
+
+
+
+
+
+
+
     <script>
-        function searchEvents() {
-          const searchTerm = document.getElementById('searchBarInput').value.toLowerCase();
-          const eventCards = document.querySelectorAll('.card');
-      
-          for (const eventCard of eventCards) {
-            const eventName = eventCard.querySelector('h2').textContent.toLowerCase();
-            const eventDate = eventCard.querySelector('p strong').textContent.toLowerCase();
-      
-            if (eventName.includes(searchTerm) || eventDate.includes(searchTerm)) {
-              eventCard.style.display = 'block';
-            } else {
-              eventCard.style.display = 'none';
-            }
+      function searchEvents() {
+        const searchTerm = document.getElementById('searchBarInput').value.toLowerCase();
+        const eventCards = document.querySelectorAll('.card');
+
+        for (const eventCard of eventCards) {
+          const eventName = eventCard.querySelector('h2').textContent.toLowerCase();
+          const eventDate = eventCard.querySelector('p strong').textContent.toLowerCase();
+
+          if (eventName.includes(searchTerm) || eventDate.includes(searchTerm)) {
+            eventCard.style.display = 'block';
+          } else {
+            eventCard.style.display = 'none';
           }
         }
-      </script>
-=======
-    </div>
->>>>>>> fa487f9fdd8e70b302ed74a8b9d3cf512e5ca4a9
+      }
+      // Adiciona um evento de clique ao botão do usuário para exibir/ocultar o menu
+      document.getElementById('usuario-btn').addEventListener('click', function () {
+        var menu = document.getElementById('usuario-menu');
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      });
+    </script>
 </body>
 
 </html>

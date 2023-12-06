@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .user-info {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info p {
+            margin: 10px 0;
+        }
+
+        h3 {
+            color: #3498db;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        label, select, input {
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #27ae60;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .camposFisica,
+        .camposJuridica {
+            display: none;
+        }
+
+        /* Estilizando os campos */
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #219d54;
+        }
+
+        /* Adicione mais estilos conforme necessário */
+
+    </style>
+</head>
+
+<body>
+    <a href="{% url 'eventos' %}" class="back-button">Voltar</a>
+    <h2>Meus Dados</h2>
+
+    <div class="user-info">
+        <h3>Informações do Usuário</h3>
+        <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Telefone: {{ user.pessoa.telefone }}</p>
+        {% if user.pessoa.pessoafisica %}
+        <p>CPF: {{ user.pessoa.pessoafisica.cpf }}</p>
+        {% elif user.pessoa.pessoajuridica %}
+        <p>CNPJ: {{ user.pessoa.pessoajuridica.cnpj }}</p>
+        <p>Razão Social: {{ user.pessoa.pessoajuridica.razaoSocial }}</p>
+        <p>Nome Fantasia: {{ user.pessoa.pessoajuridica.nomeFantasia }}</p>
+        {% endif %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="id_nome">Nome Completo:</label>
+        <input type="text" name="nome" id="id_nome" value="{{ user.pessoa.nome }}" required>
+
+        <label for="id_tipo">Tipo de Pessoa:</label>
+        <select name="tipo" id="id_tipo" onchange="mostrarCampos(this.value)" required>
+            <option value="" {% if not user.pessoa.pessoafisica and not user.pessoa.pessoajuridica %}selected{% endif %}>Escolha...</option>
+            <option value="fisica" {% if user.pessoa.pessoafisica %}selected{% endif %}>Pessoa Física</option>
+            <option value="juridica" {% if user.pessoa.pessoajuridica %}selected{% endif %}>Pessoa Jurídica</option>
+        </select>
+
+        <div class="camposFisica">
+            <label for="id_cpf">CPF:</label>
+            <input type="text" name="cpf" id="id_cpf" value="{{ user.pessoa.pessoafisica.cpf }}" required>
+        </div>
+
+        <div class="camposJuridica">
+            <label for="id_cnpj">CNPJ:</label>
+            <input type="text" name="cnpj" id="id_cnpj" value="{{ user.pessoa.pessoajuridica.cnpj }}" required>
+
+            <label for="id_razao_social">Razão Social:</label>
+            <input type="text" name="razao_social" id="id_razao_social" value="{{ user.pessoa.pessoajuridica.razaoSocial }}" required>
+
+            <label for="id_nome_fantasia">Nome Fantasia:</label>
+            <input type="text" name="nome_fantasia" id="id_nome_fantasia" value="{{ user.pessoa.pessoajuridica.nomeFantasia }}" required>
+        </div>
+
+        <button type="submit">Atualizar Dados</button>
+    </form>
+
+    <script>
+        function mostrarCampos(tipo) {
+            var camposFisica = document.querySelector('.camposFisica');
+            var camposJuridica = document.querySelector('.camposJuridica');
+
+            if (tipo === 'fisica') {
+                camposFisica.style.display = 'block';
+                camposJuridica.style.display = 'none';
+            } else if (tipo === 'juridica') {
+                camposFisica.style.display = 'none';
+                camposJuridica.style.display = 'block';
+            } else {
+                camposFisica.style.display = 'none';
+                camposJuridica.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
